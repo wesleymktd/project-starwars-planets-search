@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function useFetch() {
   const [error, setError] = useState(null);
-  // const [planets, setPlanet] = useState([]);
+  const [planets, setPlanets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const makeFetch = async (url) => {
@@ -10,14 +10,21 @@ function useFetch() {
       setIsLoading(true);
       const response = await fetch(url);
       const data = await response.json();
-      return data;
+      const filtPlanets = data.results;
+      filtPlanets.forEach((plan) => delete plan.residents);
+      setPlanets(filtPlanets);
     } catch (err) {
       setError(error);
     } finally {
       setIsLoading(false);
     }
   };
-  return { makeFetch, error, isLoading };
+
+  useEffect(() => {
+    makeFetch('https://swapi.dev/api/planets');
+  }, []);
+
+  return { planets, error, isLoading };
 }
 
 export default useFetch;

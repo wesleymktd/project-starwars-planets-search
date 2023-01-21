@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import { ListPlanetsContext } from '../context/ListPlanetsProvider';
 
 function Table() {
-  const { planets, isLoading } = useContext(ListPlanetsContext);
-  // console.log(planets);
+  const { showPlanets, isLoading } = useContext(ListPlanetsContext);
   return (
     <div className="table-container">
       {isLoading && <h3>Carregando...</h3>}
@@ -26,7 +25,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planets.map((planet) => (
+          {showPlanets.map((planet) => (
             <tr key={ planet.name } className="container-table-elements">
               <td className="table-elements">{planet.name}</td>
               <td className="table-elements">{planet.rotation_period}</td>
