@@ -19,12 +19,33 @@ function ListPlanetsProvider({ children }) {
     }
   };
 
+  const filterByNumber = ({ columFilt, compared, numberFilt }) => {
+    if (compared === 'maior que') {
+      const filt1 = showPlanets
+        .filter((planet) => +(planet[columFilt]) > +(numberFilt));
+      setShowPlanets(filt1);
+      console.log(filt1);
+    }
+    if (compared === 'menor que') {
+      const filt1 = showPlanets
+        .filter((planet) => +(planet[columFilt]) < +(numberFilt));
+      setShowPlanets(filt1);
+      console.log(filt1);
+    }
+    if (compared === 'igual a') {
+      const filt1 = showPlanets
+        .filter((planet) => +(planet[columFilt]) === +(numberFilt));
+      setShowPlanets(filt1);
+      console.log(filt1);
+    }
+  };
+
   useEffect(() => {
     searchPlanetsByName();
   }, [planets, searchByName]);
 
   const values = useMemo(() => ({
-    showPlanets, error, isLoading, setSearchByName,
+    showPlanets, error, isLoading, setSearchByName, filterByNumber,
   }), [showPlanets, error, isLoading]);
 
   return (
