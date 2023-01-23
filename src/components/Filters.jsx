@@ -2,12 +2,14 @@ import { useContext, useState } from 'react';
 import { ListPlanetsContext } from '../context/ListPlanetsProvider';
 
 function Filters() {
-  const { filterByNumber } = useContext(ListPlanetsContext);
+  const { filterByNumber, columFiltOptions } = useContext(ListPlanetsContext);
   const [filtNumber, setFiltNumber] = useState({
-    columFilt: 'population',
+    columFilt: columFiltOptions[0],
     compared: 'maior que',
     numberFilt: 0,
   });
+
+  console.log(columFiltOptions);
 
   const handleChange = ({ target }) => {
     setFiltNumber({
@@ -19,12 +21,32 @@ function Filters() {
   const buttonFiltNumber = () => {
     filterByNumber(filtNumber);
     setFiltNumber({
-      columFilt: 'population',
+      columFilt: columFiltOptions[0],
       compared: 'maior que',
       numberFilt: 0,
     });
   };
+  // fazer um maping nas options, onde são carregadas de forma dinâmica
+  // criar um estado onde ele é alimentado com as informações do filtro atual. (eu já tenho esse estado)
+  // ao clicar no filtro ela será re-renderizada novamente e em cada option
+  // já adicona o buttom de excluir o filtro, onde vou implementar futuramente
+  // a funcionalidade
 
+  //   filterByNumericValues: [
+  //     {
+  //       column: 'population',
+  //       comparison: 'maior que',
+  //       value: '100000',
+  //     },
+  //     {
+  //       column: 'diameter',
+  //       comparison: 'menor que',
+  //       value: '8000',
+  //     }
+  //   ]
+  // }
+  // na renderização desse objeto faço um template literal e renderizando também o botão de
+  // excluir
   return (
     <div>
       <label htmlFor="columFilt">
@@ -37,11 +59,9 @@ function Filters() {
           value={ filtNumber.columFilt }
           onChange={ handleChange }
         >
-          <option>population</option>
-          <option>orbital_period</option>
-          <option>diameter</option>
-          <option>rotation_period</option>
-          <option>surface_water</option>
+          {columFiltOptions.map((option) => (
+            <option key={ option } value={ option }>{option}</option>
+          ))}
         </select>
       </label>
       <label htmlFor="compared">

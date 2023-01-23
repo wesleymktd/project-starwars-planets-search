@@ -7,6 +7,9 @@ function ListPlanetsProvider({ children }) {
   const { planets, error, isLoading } = useFetch();
   const [showPlanets, setShowPlanets] = useState([]);
   const [searchByName, setSearchByName] = useState([]);
+  const [columFiltOptions, setColumFiltOptions] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   const searchPlanetsByName = () => {
     if (searchByName.length === 0) {
@@ -24,20 +27,19 @@ function ListPlanetsProvider({ children }) {
       const filt1 = showPlanets
         .filter((planet) => +(planet[columFilt]) > +(numberFilt));
       setShowPlanets(filt1);
-      console.log(filt1);
     }
     if (compared === 'menor que') {
       const filt1 = showPlanets
         .filter((planet) => +(planet[columFilt]) < +(numberFilt));
       setShowPlanets(filt1);
-      console.log(filt1);
     }
     if (compared === 'igual a') {
       const filt1 = showPlanets
         .filter((planet) => +(planet[columFilt]) === +(numberFilt));
       setShowPlanets(filt1);
-      console.log(filt1);
     }
+    const newColumOptions = columFiltOptions.filter((option) => option !== columFilt);
+    setColumFiltOptions(newColumOptions);
   };
 
   useEffect(() => {
@@ -45,7 +47,7 @@ function ListPlanetsProvider({ children }) {
   }, [planets, searchByName]);
 
   const values = useMemo(() => ({
-    showPlanets, error, isLoading, setSearchByName, filterByNumber,
+    showPlanets, error, isLoading, setSearchByName, filterByNumber, columFiltOptions,
   }), [showPlanets, error, isLoading]);
 
   return (
