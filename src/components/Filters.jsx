@@ -22,7 +22,7 @@ function Filters() {
   const buttonFiltNumber = () => {
     filterByNumberClick(filtNumber);
     setFiltNumber({
-      columFilt: columFiltOptions[columFiltOptions.lenght - 1],
+      columFilt: columFiltOptions[0],
       compared: 'maior que',
       numberFilt: 0,
     });

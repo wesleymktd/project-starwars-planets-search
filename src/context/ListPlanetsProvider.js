@@ -109,7 +109,7 @@ function ListPlanetsProvider({ children }) {
     filterByNumberClick,
     handleFiltersRemoveAll,
     columFiltOptions,
-  }), [showPlanets, error, isLoading]);
+  }), [showPlanets, error, isLoading, columFiltOptions, setSearchByName, filtCompared]);
 
   return (
     <ListPlanetsContext.Provider value={ values }>
