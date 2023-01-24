@@ -27,7 +27,7 @@ function Table() {
         <tbody>
           {showPlanets.map((planet) => (
             <tr key={ planet.name } className="container-table-elements">
-              <td className="table-elements">{planet.name}</td>
+              <td data-testid="planet-name" className="table-elements">{planet.name}</td>
               <td className="table-elements">{planet.rotation_period}</td>
               <td className="table-elements">{planet.orbital_period}</td>
               <td className="table-elements">{planet.diameter}</td>

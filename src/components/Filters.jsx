@@ -2,15 +2,16 @@ import { useContext, useState } from 'react';
 import { ListPlanetsContext } from '../context/ListPlanetsProvider';
 
 function Filters() {
-  const {
-    filterByNumberClick, columFiltOptions, filtCompared,
-    removeFilterClick, handleFiltersRemoveAll,
-  } = useContext(ListPlanetsContext);
   const [filtNumber, setFiltNumber] = useState({
     columFilt: 'population',
     compared: 'maior que',
     numberFilt: 0,
   });
+
+  const {
+    filterByNumberClick, columFiltOptions, filtCompared,
+    removeFilterClick, handleFiltersRemoveAll, filtButtonSort, handleOrdened, sort,
+  } = useContext(ListPlanetsContext);
 
   const handleChange = ({ target }) => {
     setFiltNumber({
@@ -36,27 +37,7 @@ function Filters() {
       numberFilt: 0,
     });
   };
-  // fazer um maping nas options, onde são carregadas de forma dinâmica
-  // criar um estado onde ele é alimentado com as informações do filtro atual. (eu já tenho esse estado)
-  // ao clicar no filtro ela será re-renderizada novamente e em cada option
-  // já adicona o buttom de excluir o filtro, onde vou implementar futuramente
-  // a funcionalidade
 
-  //   filterByNumericValues: [
-  //     {
-  //       column: 'population',
-  //       comparison: 'maior que',
-  //       value: '100000',
-  //     },
-  //     {
-  //       column: 'diameter',
-  //       comparison: 'menor que',
-  //       value: '8000',
-  //     }
-  //   ]
-  // }
-  // na renderização desse objeto faço um template literal e renderizando também o botão de
-  // excluir
   return (
     <div>
       <label htmlFor="columFilt">
@@ -128,6 +109,56 @@ function Filters() {
         </li>
       ))}
       </ul>
+      <label htmlFor="colum-ordened">
+        Ordenar
+        <select
+          className="select-filters"
+          name="columOrd"
+          id="colum-ordened"
+          data-testid="column-sort"
+          value={ sort.columOrd }
+          onChange={ handleOrdened }
+        >
+          <option>population</option>
+          <option>orbital_period</option>
+          <option>diameter</option>
+          <option>rotation_period</option>
+          <option>surface_water</option>
+        </select>
+      </label>
+
+      <label htmlFor="orderFilt">
+        Ascendente
+        <input
+          className="orderFilt"
+          name="ordened"
+          id="orderFilt"
+          type="radio"
+          data-testid="column-sort-input-asc"
+          onChange={ handleOrdened }
+          value="ASC"
+        />
+      </label>
+      <label htmlFor="order-Filt">
+        Descendente
+        <input
+          className="orderFilt"
+          name="ordened"
+          id="order-Filt"
+          type="radio"
+          data-testid="column-sort-input-desc"
+          onChange={ handleOrdened }
+          value="DESC"
+        />
+      </label>
+
+      <button
+        type="button"
+        onClick={ filtButtonSort }
+        data-testid="column-sort-button"
+      >
+        Ordenar
+      </button>
     </div>
   );
 }

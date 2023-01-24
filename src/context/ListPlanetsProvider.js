@@ -12,6 +12,11 @@ function ListPlanetsProvider({ children }) {
   ]);
   const [filtCompared, setFiltCompared] = useState([]);
 
+  const [sort, setSort] = useState({
+    columOrd: 'population',
+    ordened: '',
+  });
+
   const searchPlanetsByName = () => {
     if (searchByName.length === 0) {
       setShowPlanets(planets);
@@ -89,6 +94,27 @@ function ListPlanetsProvider({ children }) {
     setFiltCompared([]);
   };
 
+  const handleOrdened = ({ target: { name, value } }) => {
+    setSort({
+      ...sort,
+      [name]: value,
+    });
+  };
+
+  const filtButtonSort = () => {
+    const filtWithUnknown = showPlanets
+      .filter((planet) => planet[sort.columOrd] === 'unknown');
+    const filtNotUnknown = showPlanets
+      .filter((planet) => planet[sort.columOrd] !== 'unknown');
+    if (sort.ordened === 'ASC') {
+      filtNotUnknown.sort((a, b) => a[sort.columOrd] - b[sort.columOrd]);
+    } else {
+      filtNotUnknown.sort((a, b) => b[sort.columOrd] - a[sort.columOrd]);
+    }
+    const updateSortArray = [...filtNotUnknown, ...filtWithUnknown];
+    setShowPlanets(updateSortArray);
+  };
+
   useEffect(() => {
     filtCompared.forEach((filtersUsed) => {
       updatePlanetsAndFilt(filtersUsed, showPlanets);
@@ -109,7 +135,11 @@ function ListPlanetsProvider({ children }) {
     filterByNumberClick,
     handleFiltersRemoveAll,
     columFiltOptions,
-  }), [showPlanets, error, isLoading, columFiltOptions, setSearchByName, filtCompared]);
+    handleOrdened,
+    sort,
+    filtButtonSort,
+  }), [showPlanets, error, isLoading,
+    columFiltOptions, setSearchByName, filtCompared, sort]);
 
   return (
     <ListPlanetsContext.Provider value={ values }>
