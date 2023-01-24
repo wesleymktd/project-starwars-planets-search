@@ -2,14 +2,15 @@ import { useContext, useState } from 'react';
 import { ListPlanetsContext } from '../context/ListPlanetsProvider';
 
 function Filters() {
-  const { filterByNumber, columFiltOptions } = useContext(ListPlanetsContext);
+  const {
+    filterByNumberClick, columFiltOptions, filtCompared,
+    removeFilterClick, handleFiltersRemoveAll,
+  } = useContext(ListPlanetsContext);
   const [filtNumber, setFiltNumber] = useState({
-    columFilt: columFiltOptions[0],
+    columFilt: 'population',
     compared: 'maior que',
     numberFilt: 0,
   });
-
-  console.log(columFiltOptions);
 
   const handleChange = ({ target }) => {
     setFiltNumber({
@@ -19,9 +20,18 @@ function Filters() {
   };
 
   const buttonFiltNumber = () => {
-    filterByNumber(filtNumber);
+    filterByNumberClick(filtNumber);
     setFiltNumber({
-      columFilt: columFiltOptions[0],
+      columFilt: columFiltOptions[columFiltOptions.lenght - 1],
+      compared: 'maior que',
+      numberFilt: 0,
+    });
+  };
+
+  const handleRemove = ({ target: { name: columFilt } }) => {
+    removeFilterClick(columFilt);
+    setFiltNumber({
+      columFilt: columFiltOptions[columFiltOptions.lenght - 1],
       compared: 'maior que',
       numberFilt: 0,
     });
@@ -95,6 +105,29 @@ function Filters() {
       >
         Filtrar
       </button>
+      <button
+        type="button"
+        onClick={ handleFiltersRemoveAll }
+        data-testid="button-remove-filters"
+      >
+        Remover Filtros
+      </button>
+      <br />
+      <ul>
+        {filtCompared.lenght !== 0
+      && filtCompared.map(({ columFilt, compared, numberFilt }, i) => (
+        <li data-testid="filter" key={ i }>
+          <p>{`${columFilt} ${compared} ${numberFilt}`}</p>
+          <button
+            type="button"
+            name={ columFilt }
+            onClick={ handleRemove }
+          >
+            X
+          </button>
+        </li>
+      ))}
+      </ul>
     </div>
   );
 }

@@ -10,6 +10,7 @@ function ListPlanetsProvider({ children }) {
   const [columFiltOptions, setColumFiltOptions] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
+  const [filtCompared, setFiltCompared] = useState([]);
 
   const searchPlanetsByName = () => {
     if (searchByName.length === 0) {
@@ -22,7 +23,7 @@ function ListPlanetsProvider({ children }) {
     }
   };
 
-  const filterByNumber = ({ columFilt, compared, numberFilt }) => {
+  const filterByNumberClick = ({ columFilt, compared, numberFilt }) => {
     if (compared === 'maior que') {
       const filt1 = showPlanets
         .filter((planet) => +(planet[columFilt]) > +(numberFilt));
@@ -40,14 +41,74 @@ function ListPlanetsProvider({ children }) {
     }
     const newColumOptions = columFiltOptions.filter((option) => option !== columFilt);
     setColumFiltOptions(newColumOptions);
+
+    setFiltCompared([...filtCompared, { columFilt, compared, numberFilt }]);
   };
+
+  // eu tenho um array de filtros eu preciso que ele sempre mude sempre que o array é
+  // alterado, através de userEfeect
+  // para cada filtro dentro do arrai tenho que chamar minha função de filtro
+  // para cada item do meu array eu passo pela função do filterBuNumbe
+
+  const updatePlanetsAndFilt = ({ columFilt,
+    compared, numberFilt }, showPlan = []) => {
+    if (compared === 'maior que') {
+      const filt1 = showPlan
+        .filter((planet) => +(planet[columFilt]) > +(numberFilt));
+      setShowPlanets(filt1);
+    }
+    if (compared === 'menor que') {
+      const filt1 = showPlan
+        .filter((planet) => +(planet[columFilt]) < +(numberFilt));
+      setShowPlanets(filt1);
+    }
+    if (compared === 'igual a') {
+      const filt1 = showPlan
+        .filter((planet) => +(planet[columFilt]) === +(numberFilt));
+      setShowPlanets(filt1);
+    }
+  };
+
+  const filterRemoveColum = (columFilt, updateFiltCompared) => {
+    setColumFiltOptions([...columFiltOptions, columFilt]);
+    setFiltCompared(updateFiltCompared);
+  };
+
+  const removeFilterClick = (columFilt) => {
+    setShowPlanets(planets);
+    const updateFiltCompared = filtCompared
+      .filter((filt) => filt.columFilt !== columFilt);
+    filterRemoveColum(columFilt, updateFiltCompared);
+  };
+
+  const handleFiltersRemoveAll = () => {
+    setShowPlanets(planets);
+    setColumFiltOptions([
+      'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+    ]);
+    setFiltCompared([]);
+  };
+
+  useEffect(() => {
+    filtCompared.forEach((filtersUsed) => {
+      updatePlanetsAndFilt(filtersUsed, showPlanets);
+    });
+  }, [filtCompared]);
 
   useEffect(() => {
     searchPlanetsByName();
   }, [planets, searchByName]);
 
   const values = useMemo(() => ({
-    showPlanets, error, isLoading, setSearchByName, filterByNumber, columFiltOptions,
+    showPlanets,
+    error,
+    isLoading,
+    filtCompared,
+    setSearchByName,
+    removeFilterClick,
+    filterByNumberClick,
+    handleFiltersRemoveAll,
+    columFiltOptions,
   }), [showPlanets, error, isLoading]);
 
   return (
