@@ -30,6 +30,7 @@ function Filters() {
   };
 
   const handleRemove = ({ target: { name: columFilt } }) => {
+    console.log(columFilt);
     removeFilterClick(columFilt);
     setFiltNumber({
       columFilt: columFiltOptions[columFiltOptions.lenght - 1],
@@ -95,7 +96,7 @@ function Filters() {
       </button>
       <br />
       <ul>
-        {filtCompared.lenght !== 0
+        {filtCompared.length !== 0
       && filtCompared.map(({ columFilt, compared, numberFilt }, i) => (
         <li data-testid="filter" key={ i }>
           <p>{`${columFilt} ${compared} ${numberFilt}`}</p>
