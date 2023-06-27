@@ -1,13 +1,31 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+## 🧐 Sobre
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+<p align="left"> 
+	StarWars Planets Search é uma lista de filtros de planetas do universo Star Wars usando Context API e Hooks para controlar estados globais. Esta aplicação é capaz de:
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+adicionar e remover filtros;
+acumular filtros;
+</p>
+
+
+## ⚒ Instalando <a name = "installing"></a>
+
+```bash
+# Clone o projeto
+$ git clone git@github.com:wesleymktd/project-starwars-planets-search.git
+# Acesse
+$ cd ./project-starwars-planets-search
+# Instale as dependencias
+$ npm install
+# Inicie o projeto
+$ npm start
+# O servidor vai inicar na porta <http://localhost:3000>
+```
+
+## Principais tecnologias utilizadas:
+- React;
+- Hooks;
+- Context API;
+- JavaScript;
+- Css;
+
