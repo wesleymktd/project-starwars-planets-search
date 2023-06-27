@@ -3,8 +3,8 @@
 <p align="left"> 
 	StarWars Planets Search é uma lista de filtros de planetas do universo Star Wars usando Context API e Hooks para controlar estados globais. Esta aplicação é capaz de:
 
-adicionar e remover filtros;
-acumular filtros;
+- adicionar e remover filtros;
+- acumular filtros;
 </p>
 
 
