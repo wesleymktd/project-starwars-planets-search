@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 import { ListPlanetsContext } from '../context/ListPlanetsProvider';
 
 function FilterSearch() {
@@ -11,10 +12,13 @@ function FilterSearch() {
   };
 
   return (
-    <div>
+    <div className="div-input-icon">
+      <SearchIcon className="search-icon" />
       <input
         type="text"
         name="searchNameInputs"
+        placeholder="Pesquise por planetas"
+        className="table-input-text"
         data-testid="name-filter"
         value={ searchNameInputs }
         onChange={ handleChange }
