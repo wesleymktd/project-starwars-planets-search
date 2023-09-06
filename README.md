@@ -7,6 +7,10 @@
 - acumular filtros;
 </p>
 
+<div align="center" display="inline">
+<img src="./src/image/my-star-wars.png" alt="my-star-wars" width="400px" height="250px">
+</div>
+
 
 ## ⚒ Instalando <a name = "installing"></a>
 
